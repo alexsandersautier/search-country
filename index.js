@@ -33,3 +33,9 @@ function search(){
         });
     ACountry.innerText = ''    
 }
+let ACountry = document.getElementById('country')
+ACountry.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        search();
+    }
+})
