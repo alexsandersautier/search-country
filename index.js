@@ -1,13 +1,18 @@
 document.getElementById('card').style.setProperty('display','none','important')
 
 function search(){
-    document.getElementById('card').style.setProperty('display','block','important')
-
+    
     let ACountry = document.getElementById('country').value
     let AEndPoint= `https://restcountries.com/v3.1/name/${ACountry}?fullText=true`
     fetch(AEndPoint)
         .then(function(response){
-            return response.json()
+            if (response.status === 200) {
+                document.getElementById('card').style.setProperty('display','block','important')
+                return response.json();
+            } else {
+                document.getElementById('card').style.setProperty('display','none','important')
+                throw new Error('The request failed. Status:' + response.status)
+            }
         })
         .then(function(data){
             let flag = document.getElementById('flag')
@@ -23,5 +28,8 @@ function search(){
             pop.innerText = data[0].population
 
         })
+        .catch(function(error) {
+           alert(error);
+        });
     ACountry.innerText = ''    
 }
